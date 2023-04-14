@@ -14,6 +14,7 @@ def createWallets(playerList):
     
     walletMap = {}
     for player in playerList:
+        player = player.strip()
         missions = []
         for i in range(6):
             x = dareIndices.pop(0)
@@ -45,7 +46,7 @@ def accomplishedDare(playerName,dare,wallets,roomName):
 def playGame(roomName):
     f = open(roomName)
     wallets = json.load(f)
-    playerAuth = input("Which player are you? ")
+    playerAuth = input("Which player are you? ").strip()
     for i in range(len(wallets[playerAuth])):
         print (i + 1, ". ", wallets[playerAuth][i][0], " - ", wallets[playerAuth][i][1])
     
@@ -65,8 +66,8 @@ def playGame(roomName):
 if __name__ == "__main__":
     print ("Welcome to Don't Get Got!")
     # playerList = definePlayers()
-    # playerList = "Avishek, Brandon, Jeremy, Aditya, Vishal, Noah, Chris".strip().split(",")
-    # createWallets(playerList)
+    playerList = "Avishek, Brandon, Jeremy, Aditya, Richie".strip().split(",")
+    createWallets(playerList)
     playGame("room1.json")
 
 
