@@ -7,12 +7,8 @@ def definePlayers():
     return playerList
 
 def createWallets(playerList): 
-    # session = open("session.txt", "") #creates room
     f = open("dareList.txt", "r").readlines()
     numDares = sum(1 for line in f if line.rstrip())
-    
-    
-    numPlayers = len(playerList)
     dareIndices = [i for i in range(numDares)]
     random.shuffle(dareIndices)
     
@@ -27,6 +23,21 @@ def createWallets(playerList):
     with open("room1.json", "w") as outfile:
         json.dump(walletMap, outfile)
 
+def failedDare(playerName, dare, wallets, roomName): 
+
+    toIndex = wallets[playerName]
+    ind = toIndex.index([dare, "Not Attempted"])
+    wallets[playerName][ind] = [dare, "Failed"]
+
+    print(wallets[playerName])
+
+def accomplishedDare(playerName,dare,wallets,roomName):
+    toIndex = wallets[playerName]
+    ind = toIndex.index([dare, "Not Attempted"])
+    wallets[playerName][ind] = [dare, "Complete"]
+    print(wallets[playerName])
+
+
             
 
 def playGame(roomName):
@@ -35,9 +46,13 @@ def playGame(roomName):
     playerAuth = input("Which player are you? ")
     for i in range(len(wallets[playerAuth])):
         print (i + 1, ". ", wallets[playerAuth][i][0], " - ", wallets[playerAuth][i][1])
+    
+    
 if __name__ == "__main__":
     print ("Welcome to Don't Get Got!")
-    playerList = definePlayers()
+    # playerList = definePlayers()
     # playerList = "Avishek, Brandon, Jeremy, Aditya, Vishal, Noah, Chris".strip().split(",")
-    createWallets(playerList)
+    # createWallets(playerList)
     playGame("room1.json")
+
+
