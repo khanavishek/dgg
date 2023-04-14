@@ -29,13 +29,15 @@ def failedDare(playerName, dare, wallets, roomName):
     ind = toIndex.index([dare, "Not Attempted"])
     wallets[playerName][ind] = [dare, "Failed"]
 
-    print(wallets[playerName])
+    # print(wallets[playerName])
+    return wallets
 
 def accomplishedDare(playerName,dare,wallets,roomName):
     toIndex = wallets[playerName]
     ind = toIndex.index([dare, "Not Attempted"])
     wallets[playerName][ind] = [dare, "Complete"]
-    print(wallets[playerName])
+    # print(wallets[playerName])
+    return wallets
 
 
             
@@ -47,7 +49,19 @@ def playGame(roomName):
     for i in range(len(wallets[playerAuth])):
         print (i + 1, ". ", wallets[playerAuth][i][0], " - ", wallets[playerAuth][i][1])
     
-    
+    while(True):
+        takeInput = input("Did you complete a dare?: ")
+        if takeInput != "end":
+            inputList = takeInput.strip().split("-")
+            if inputList[1].strip() == "yes":
+                wallets = accomplishedDare(playerAuth, inputList[0].strip(), wallets, roomName)
+            else: 
+                wallets = failedDare(playerAuth, inputList[0].strip(), wallets, roomName)
+            for i in range(len(wallets[playerAuth])):
+                print (i + 1, ". ", wallets[playerAuth][i][0], " - ", wallets[playerAuth][i][1])
+        else:
+            break
+
 if __name__ == "__main__":
     print ("Welcome to Don't Get Got!")
     # playerList = definePlayers()
